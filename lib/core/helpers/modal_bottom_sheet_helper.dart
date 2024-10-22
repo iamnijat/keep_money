@@ -14,6 +14,7 @@ void showPersonalInfoModalBottomSheet(
     backgroundColor: AppPalette.whiteColor,
     shape: AppStyles.modalBottomSheetShapeDecorationStyle,
     enableDrag: true,
+    isScrollControlled: true,
     context: context,
     builder: (BuildContext context) =>
         PersonalInfoModalBottomSheet(localization),
@@ -26,8 +27,9 @@ Future showPersonalInfoEditModalBottomSheet(
   return showModalBottomSheet(
     backgroundColor: AppPalette.whiteColor,
     shape: AppStyles.modalBottomSheetShapeDecorationStyle,
-    enableDrag: true,
     context: context,
+    enableDrag: true,
+    isScrollControlled: true,
     builder: (BuildContext context) =>
         PersonalInfoEditModalBottomSheet(localization, user),
   );
@@ -39,6 +41,7 @@ Future showAddTransactionModalBottomSheet(
       backgroundColor: AppPalette.whiteColor,
       shape: AppStyles.modalBottomSheetShapeDecorationStyle,
       enableDrag: true,
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) =>
           AddTransactionModalBottomSheet(localization));

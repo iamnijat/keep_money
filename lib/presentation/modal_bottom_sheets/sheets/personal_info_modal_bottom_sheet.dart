@@ -33,39 +33,41 @@ class _PersonalInfoModalBottomSheetBodyState
     extends State<_PersonalInfoModalBottomSheetBody> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Material(
-            type: MaterialType.transparency,
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6.w),
+    return Material(
+        type: MaterialType.transparency,
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            child: SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocBuilder<PersonalInfoModalBottomSheetCubit,
-                              PersonalInfoModalBottomSheetState>(
-                          builder: (context, state) {
-                        final cubit =
-                            context.read<PersonalInfoModalBottomSheetCubit>();
-                        if (state == PersonalInfoModalBottomSheetState.error) {
-                          return ErrorPage(refreshTap: () async {
-                            await cubit.auth(context, mounted);
-                          });
-                        }
-                        return Column(
-                          children: [
-                            const VerticalSpacer(4),
-                            ModalBottomSheetHeader(
-                                widget._localization
-                                    .personalInfoModalBottomSheetTitle,
-                                backTap: () => cubit.back(context)),
-                            const VerticalSpacer(3),
-                            PersonalInfoModalBottomSheetForm(
-                                widget._localization, cubit, state),
-                            buildViewInsetsPadding(context),
-                          ],
-                        );
-                      }),
-                    ]))));
+                  BlocBuilder<PersonalInfoModalBottomSheetCubit,
+                          PersonalInfoModalBottomSheetState>(
+                      builder: (context, state) {
+                    final cubit =
+                        context.read<PersonalInfoModalBottomSheetCubit>();
+                    if (state == PersonalInfoModalBottomSheetState.error) {
+                      return ErrorPage(refreshTap: () async {
+                        await cubit.auth(context, mounted);
+                      });
+                    }
+                    return Column(
+                      children: [
+                        const VerticalSpacer(4),
+                        ModalBottomSheetHeader(
+                            widget._localization
+                                .personalInfoModalBottomSheetTitle,
+                            backTap: () => cubit.back(context)),
+                        const VerticalSpacer(3),
+                        PersonalInfoModalBottomSheetForm(
+                            widget._localization, cubit, state),
+                      ],
+                    );
+                  }),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: context.viewInsetsBottom),
+                  ),
+                ]))));
   }
 
   Padding buildViewInsetsPadding(BuildContext context) {
@@ -73,4 +75,9 @@ class _PersonalInfoModalBottomSheetBodyState
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom));
   }
+}
+
+extension ResponsiveViewInsetsExtension on BuildContext {
+  double get viewInsetsBottom => MediaQuery.of(this).viewInsets.bottom;
+  EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 }
